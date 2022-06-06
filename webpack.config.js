@@ -2,7 +2,7 @@
 var path = require("path");
 
 module.exports = {
-  entry: "/src/entry.jsx",
+  entry: "./components/react_minesweeper.jsx",
   output: {
     filename: "./bundle.js",
   },
