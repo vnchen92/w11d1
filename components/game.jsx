@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import * as Minesweeper from "../minesweeper.js";
 import Board from "./board";
 
@@ -8,18 +7,39 @@ export default class Game extends React.Component {
     super(props);
 
     this.state = {
-      board: new Minesweeper.Board(9, 30),
+      board: new Minesweeper.Board(9, 8),
     };
-    // console.log(this.state.board.grid);
   }
 
-  updateGame = () => {};
+  updateGame = (tile, isFlagged) => {
+    console.log(tile);
+    if (isFlagged) {
+      tile.toggleFlag();
+    } else {
+      tile.explore();
+    }
+    this.setState({
+      board: this.state.board,
+    });
 
+    if (this.state.board.won()) {
+      alert("You have Won!");
+    } else if (this.state.board.lost()) {
+      alert("You Lost!");
+    }
+  };
+
+  restartGame = () => {
+    this.setState({ board: new Minesweeper.Board(9, 8) });
+  };
   render = () => {
     return (
       <div id="board-container">
-        {/* <h1>{this.state.board}</h1> */}
         <Board boardProp={this.state.board} updateGameProp={this.updateGame} />
+
+        <button onClick={this.restartGame} type="button">
+          Restart Game!
+        </button>
       </div>
     );
   };
